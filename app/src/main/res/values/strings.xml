@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HouseHunt</string>
+    <string name="splash_screen_background">Splash Screen background</string>
+    <string name="let_s_start">Let\'s start</string>
+    <string name="made_with_love">Made with love</string>
+    <string name="app_icon">App Icon</string>
+    <string name="continue_with_email">Continue with Email</string>
+</resources>
