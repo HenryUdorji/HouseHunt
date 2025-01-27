@@ -10,18 +10,19 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.househuntng.app.features.core.domain.repository.SessionManager
 import com.househuntng.app.features.onboarding.presentation.LoginHome
-import com.househuntng.app.features.onboarding.presentation.LoginScreen
+import com.househuntng.app.features.onboarding.presentation.login.LoginScreen
 import com.househuntng.app.features.onboarding.presentation.OnBoardingScreen
 import com.househuntng.app.features.onboarding.presentation.SplashScreen
+import com.househuntng.app.features.onboarding.presentation.register.RegisterScreen
 import com.househuntng.app.ui.theme.HouseHuntTheme
+import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,11 +37,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun HouseHuntApp(navController: NavHostController = rememberNavController()) {
+fun HouseHuntApp(
+    navController: NavHostController = rememberNavController(),
+    sessionManager: SessionManager = koinInject()
+) {
     Scaffold() { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = SplashScreen,
+            startDestination = if (sessionManager.getIsFirstLaunch()) SplashScreen else LoginHome,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
@@ -57,14 +61,30 @@ fun HouseHuntApp(navController: NavHostController = rememberNavController()) {
                 }
             }
             composable<LoginHome> {
-                LoginHome {
-                    navController.navigate(LoginScreen)
-                }
+                LoginHome(
+                    onContinueWithEmail = {
+                        navController.navigate(LoginScreen)
+                    },
+                    onRegisterClick = {
+                        navController.navigate(RegisterScreen)
+                    }
+                )
             }
             composable<LoginScreen> {
-                LoginScreen {
-                    navController.navigate(HomeScreen)
-                }
+                LoginScreen(
+                    onNavToHomeScreen = {
+                        navController.navigate(HomeScreen)
+                    },
+                    onForgotPassword = {},
+                    onRegisterClick = {
+                        navController.navigate(RegisterScreen)
+                    }
+                )
+            }
+            composable<RegisterScreen> {
+                RegisterScreen(
+                    onBackClick = { navController.popBackStack() }
+                )
             }
         }
     }

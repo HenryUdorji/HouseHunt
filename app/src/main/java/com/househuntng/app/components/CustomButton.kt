@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -28,7 +26,7 @@ import com.househuntng.app.ui.theme.Lato
 @Composable
 fun CustomButton(
     modifier: Modifier = Modifier,
-    onButtonClick: () -> Unit,
+    onClick: () -> Unit,
     text: String,
     textSize: Int = 16,
     textColor: Color = Color.White,
@@ -37,7 +35,7 @@ fun CustomButton(
     startIcon: ImageVector? = null,
 ) {
     Button(
-        onClick = onButtonClick,
+        onClick = onClick,
         modifier = modifier.height(54.dp),
         shape = RoundedCornerShape(radius),
         colors = ButtonDefaults.buttonColors().copy(containerColor = backgroundColor)

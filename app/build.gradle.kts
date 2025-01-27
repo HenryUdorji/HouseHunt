@@ -91,4 +91,5 @@ dependencies {
     implementation(libs.koin.compose)
 
     implementation(libs.splashscreen)
+    implementation(libs.lottie)
 }

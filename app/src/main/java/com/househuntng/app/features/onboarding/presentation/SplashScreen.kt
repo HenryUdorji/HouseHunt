@@ -62,7 +62,7 @@ fun SplashScreen(onNavToOnBoardingScreen: () -> Unit) {
         ) {
             CustomButton(
                 modifier = Modifier.width(190.dp),
-                onButtonClick = { onNavToOnBoardingScreen() },
+                onClick = { onNavToOnBoardingScreen() },
                 text = stringResource(R.string.let_s_start)
             )
 

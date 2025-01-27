@@ -22,4 +22,7 @@ object LoginScreen
 object RegisterScreen
 
 @Serializable
+object ForgotPasswordScreen
+
+@Serializable
 object HomeScreen

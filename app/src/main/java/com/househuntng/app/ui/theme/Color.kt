@@ -23,3 +23,5 @@ val CrimsonRed = Color(0xFFE74C3C)
 val SkyBlue = Color(0xFF5DADE2)
 
 val lightBackground = Color(0xFFFFFFFF)
+
+val textColor = Color(0xFF252B5C)

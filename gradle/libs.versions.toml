@@ -14,6 +14,7 @@ ktor = "3.0.2"
 kotlinxSerialization = "1.7.3"
 koin = "4.0.0"
 splash = "1.0.1"
+lottie = "6.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,7 +41,8 @@ kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-seria
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash"}
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splash" }
+lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

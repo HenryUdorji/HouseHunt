@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.househuntng.app.R
 import com.househuntng.app.components.CustomButton
+import com.househuntng.app.components.SocialButtonSection
 import com.househuntng.app.ui.theme.AppGray
 import com.househuntng.app.ui.theme.DarkGray
 import com.househuntng.app.ui.theme.DeepBlue
@@ -47,7 +48,10 @@ import com.househuntng.app.ui.theme.Lato
  * @Date: 1/24/2025
  */
 @Composable
-fun LoginHome(onNavigate: () -> Unit) {
+fun LoginHome(
+    onContinueWithEmail: () -> Unit,
+    onRegisterClick: () -> Unit,
+) {
     Column(modifier = Modifier.padding(16.dp)) {
         GallerySection()
         Spacer(modifier = Modifier.height(40.dp))
@@ -69,60 +73,37 @@ fun LoginHome(onNavigate: () -> Unit) {
             modifier = Modifier
                 .width(278.dp)
                 .align(Alignment.CenterHorizontally),
-            onButtonClick = { /*TODO*/ },
+            onClick = { onContinueWithEmail() },
             text = stringResource(R.string.continue_with_email),
             startIcon = Icons.Outlined.Email
         )
         Spacer(modifier = Modifier.height(20.dp))
         SeparatorSection()
-        SocialButtonSection()
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(15.dp))
+        SocialButtonSection(
+            onGmailClick = {
+
+            },
+            onAppleClick = {
+
+            },
+        )
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = buildAnnotatedString {
-                append("Don’t have an account? ")
+                append(stringResource(R.string.don_t_have_an_account))
 
                 withStyle(style = SpanStyle(color = DeepBlue, fontWeight = FontWeight.Bold)) {
-                    append("Register")
+                    append(stringResource(R.string.register))
                 }
             },
             color = DarkGray,
             fontFamily = Lato(),
             fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-    }
-}
-
-@Composable
-fun SocialButtonSection() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        SocialLoginButton(iconResource = R.drawable.ic_google, description = "Google Login")
-        Spacer(modifier = Modifier.width(10.dp))
-        SocialLoginButton(iconResource = R.drawable.ic_apple, description = "Apple Login")
-    }
-}
-
-@Composable
-fun RowScope.SocialLoginButton(iconResource: Int, description: String) {
-    Box(
-        modifier = Modifier
-            .height(70.dp)
-            .weight(1f)
-            .background(color = AppGray, shape = RoundedCornerShape(25.dp))
-            .clickable { /* Handle click */ },
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            modifier = Modifier.size(32.dp),
-            painter = painterResource(id = iconResource),
-            contentDescription = description,
-            tint = Color.Unspecified // Keep original icon color
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .clickable { onRegisterClick() }
         )
     }
 }

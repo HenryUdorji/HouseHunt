@@ -40,61 +40,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.househuntng.app.R
 import com.househuntng.app.components.CustomButton
+import com.househuntng.app.features.core.domain.repository.SessionManager
 import com.househuntng.app.ui.theme.AppGray
 import com.househuntng.app.ui.theme.DeepBlue
 import com.househuntng.app.ui.theme.Lato
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 /**
  * @Author: ifechukwu.udorji
  * @Date: 1/23/2025
  */
 
-data class OnBoardingItem(
-    val title: AnnotatedString,
-    val description: String,
-    val image: Int
-)
-
-val onboardItems = listOf(
-    OnBoardingItem(
-        title = buildAnnotatedString {
-            append("Find best place\n\nto stay in ")
-
-            withStyle(style = SpanStyle(color = DeepBlue, fontWeight = FontWeight.Bold)) {
-                append("good price")
-            }
-        },
-        description = "Explore a world of possibilities and find your dream home.",
-        image = R.drawable.onboarding_1
-    ),
-    OnBoardingItem(
-        title = buildAnnotatedString {
-            append("Fast sell your property\n\n just to stay in ")
-
-            withStyle(style = SpanStyle(color = DeepBlue, fontWeight = FontWeight.Bold)) {
-                append("one click")
-            }
-        },
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.",
-        image = R.drawable.onboarding_2
-    ),
-    OnBoardingItem(
-        title = buildAnnotatedString {
-            append("Find ")
-
-            withStyle(style = SpanStyle(color = DeepBlue, fontWeight = FontWeight.Bold)) {
-                append("perfect choice ")
-            }
-            append("for\n\nyour future house")
-        },
-        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.",
-        image = R.drawable.onboarding_3
-    ),
-)
-
 @Composable
-fun OnBoardingScreen(onNavigate: () -> Unit) {
+fun OnBoardingScreen(sessionManager: SessionManager = koinInject(), onNavigate: () -> Unit) {
     val pagerState = rememberPagerState(pageCount = {
         onboardItems.size
     })
@@ -108,7 +67,10 @@ fun OnBoardingScreen(onNavigate: () -> Unit) {
             val coroutineScope = rememberCoroutineScope()
             val isLastPage = pagerState.currentPage == onboardItems.size - 1
 
-            HeaderSection { onNavigate() }
+            HeaderSection {
+                sessionManager.setIsFirstLaunch()
+                onNavigate()
+            }
             Spacer(modifier = Modifier.height(20.dp))
             TextSection(onBoardingItem.title, onBoardingItem.description)
             Spacer(modifier = Modifier.height(30.dp))
@@ -117,6 +79,7 @@ fun OnBoardingScreen(onNavigate: () -> Unit) {
                 pagerState.currentPage == 0,
                 onNextClick = {
                     if (isLastPage) {
+                        sessionManager.setIsFirstLaunch()
                         onNavigate()
                     } else {
                         coroutineScope.launch {
@@ -178,7 +141,7 @@ fun ImageSection(
 
             CustomButton(
                 modifier = Modifier.width(190.dp),
-                onButtonClick = { onNextClick() },
+                onClick = { onNextClick() },
                 text = "Next"
             )
         }
@@ -220,7 +183,7 @@ fun HeaderSection(onSkipClick: () -> Unit) {
 
         CustomButton(
             modifier = Modifier.size(width = 86.dp, height = 38.dp),
-            onButtonClick = { onSkipClick() },
+            onClick = { onSkipClick() },
             text = "Skip",
             textSize = 12,
             textColor = Color.Black,
@@ -229,3 +192,46 @@ fun HeaderSection(onSkipClick: () -> Unit) {
         )
     }
 }
+
+data class OnBoardingItem(
+    val title: AnnotatedString,
+    val description: String,
+    val image: Int
+)
+
+val onboardItems = listOf(
+    OnBoardingItem(
+        title = buildAnnotatedString {
+            append("Find best place\n\nto stay in ")
+
+            withStyle(style = SpanStyle(color = DeepBlue, fontWeight = FontWeight.Bold)) {
+                append("good price")
+            }
+        },
+        description = "Explore a world of possibilities and find your dream home.",
+        image = R.drawable.onboarding_1
+    ),
+    OnBoardingItem(
+        title = buildAnnotatedString {
+            append("Fast sell your property\n\n just to stay in ")
+
+            withStyle(style = SpanStyle(color = DeepBlue, fontWeight = FontWeight.Bold)) {
+                append("one click")
+            }
+        },
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.",
+        image = R.drawable.onboarding_2
+    ),
+    OnBoardingItem(
+        title = buildAnnotatedString {
+            append("Find ")
+
+            withStyle(style = SpanStyle(color = DeepBlue, fontWeight = FontWeight.Bold)) {
+                append("perfect choice ")
+            }
+            append("for\n\nyour future house")
+        },
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed.",
+        image = R.drawable.onboarding_3
+    ),
+)
